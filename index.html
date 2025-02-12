@@ -1,61 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help Handicapped Animals | Crowdfunding</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>🐾 Help Roadside Handicapped Animals 🐾</h1>
-        <p>Your donation can save lives. Be their hope! 💙</p>
-        <a href="#donate" class="donate-btn">Donate Now</a>
-    </header>
+<section id="donate">
+    <h2>💖 Help Us Reach Our Goal!</h2>
+    <p><strong>Current Donations:</strong> <span id="donationAmount">$0</span> of $10,000</p>
+    
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <!-- Donate Button -->
+    <button onclick="donateNow()">Donate via PayPal</button>
 
-    <section id="about">
-        <h2>About Our Mission</h2>
-        <p>We rescue, treat, and rehabilitate handicapped animals found on the streets. Your support funds medical care, food, and shelter for these voiceless souls. 🏥🐶🐱</p>
-    </section>
+    <h3>🌟 Recent Donations</h3>
+    <ul id="donationList">
+        <li>No donations yet. Be the first! 🐾</li>
+    </ul>
+</section>
 
-    <section id="donate">
-        <h2>💖 Make a Donation</h2>
-        <p>100% of your donations go directly to animal care!</p>
-        <button onclick="donate()">Donate via PayPal</button>
-        <p>OR</p>
-        <p>📩 Contact us for bank transfer details.</p>
-    </section>
+<script>
+    // Sample donation data (this should be stored in a database in a real site)
+    let donationTotal = 2500; // Start with $2500 raised
+    let donationGoal = 10000; // Goal is $10,000
 
-    <section id="success">
-        <h2>🐕 Success Stories</h2>
-        <p>Meet some of the lives we've changed thanks to your generosity!</p>
-        <div class="gallery">
-            <img src="rescued1.jpg" alt="Rescued Dog">
-            <img src="rescued2.jpg" alt="Rescued Cat">
-            <img src="rescued3.jpg" alt="Another Happy Pet">
-        </div>
-    </section>
+    // Update donation tracker
+    function updateDonations(amount) {
+        donationTotal += amount;
+        document.getElementById("donationAmount").innerText = `$${donationTotal}`;
+        document.getElementById("progressBar").style.width = (donationTotal / donationGoal) * 100 + "%";
+        
+        // Add to recent donations
+        let donationList = document.getElementById("donationList");
+        let newDonation = document.createElement("li");
+        newDonation.textContent = `🎉 Someone donated $${amount}!`;
+        donationList.prepend(newDonation);
+    }
 
-    <section id="volunteer">
-        <h2>🤝 Join Us!</h2>
-        <p>Become a volunteer or adopt an animal in need. Fill out the form below.</p>
-        <form>
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <textarea placeholder="How would you like to help?" required></textarea>
-            <button type="submit">Submit</button>
-        </form>
-    </section>
-
-    <footer>
-        <p>📍 Contact us: help@animalrescue.org | 📞 +123 456 7890</p>
-        <p>Follow us on social media! 🌍</p>
-    </footer>
-
-    <script>
-        function donate() {
-            window.location.href = "https://www.paypal.com/donate";
+    // Simulate donation button click
+    function donateNow() {
+        let amount = parseInt(prompt("Enter donation amount ($)"));
+        if (!isNaN(amount) && amount > 0) {
+            alert("Thank you for donating! ❤️");
+            updateDonations(amount);
+        } else {
+            alert("Please enter a valid amount.");
         }
-    </script>
-</body>
-</html>
+    }
+
+    // Initialize progress bar
+    document.getElementById("donationAmount").innerText = `$${donationTotal}`;
+    document.getElementById("progressBar").style.width = (donationTotal / donationGoal) * 100 + "%";
+</script>
