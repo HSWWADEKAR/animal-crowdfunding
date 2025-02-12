@@ -1,3 +1,7 @@
+<!-- Stripe Donate Button -->
+<button id="stripeDonateBtn">Donate via Credit/Debit Card</button>
+<!-- PayPal Donate Button -->
+<a href="YOUR_PAYPAL_DONATION_LINK" target="_blank" class="donate-btn">Donate via PayPal</a>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +10,16 @@
     <title>Help Handicapped Animals | Crowdfunding</title>
     <link rel="stylesheet" href="style.css">
 </head>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    const stripe = Stripe("YOUR_PUBLISHABLE_KEY");
+
+    document.getElementById("stripeDonateBtn").addEventListener("click", async () => {
+        const response = await fetch("/create-checkout-session", { method: "POST" });
+        const session = await response.json();
+        stripe.redirectToCheckout({ sessionId: session.id });
+    });
+</script>
 <body>
     <header>
         <h1>🐾 Help Roadside Handicapped Animals 🐾</h1>
