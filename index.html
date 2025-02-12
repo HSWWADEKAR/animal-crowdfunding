@@ -17,35 +17,48 @@
 </section>
 
 <script>
-    // Sample donation data (this should be stored in a database in a real site)
+    // Initialize donation data
     let donationTotal = 2500; // Start with $2500 raised
     let donationGoal = 10000; // Goal is $10,000
 
-    // Update donation tracker
+    // Function to update the donation display
     function updateDonations(amount) {
         donationTotal += amount;
         document.getElementById("donationAmount").innerText = `$${donationTotal}`;
-        document.getElementById("progressBar").style.width = (donationTotal / donationGoal) * 100 + "%";
         
-        // Add to recent donations
+        // Update progress bar width
+        let progressPercentage = (donationTotal / donationGoal) * 100;
+        document.getElementById("progressBar").style.width = progressPercentage + "%";
+
+        // Add new donation to the list
         let donationList = document.getElementById("donationList");
+        
+        // Remove "No donations yet" message if it exists
+        if (donationList.children[0] && donationList.children[0].innerText.includes("No donations yet")) {
+            donationList.innerHTML = "";
+        }
+
         let newDonation = document.createElement("li");
         newDonation.textContent = `🎉 Someone donated $${amount}!`;
         donationList.prepend(newDonation);
     }
 
-    // Simulate donation button click
+    // Function to handle donations
     function donateNow() {
-        let amount = parseInt(prompt("Enter donation amount ($)"));
+        let amount = prompt("Enter donation amount ($)");
+        amount = parseInt(amount);
+        
         if (!isNaN(amount) && amount > 0) {
-            alert("Thank you for donating! ❤️");
+            alert("Thank you for your donation! ❤️");
             updateDonations(amount);
         } else {
             alert("Please enter a valid amount.");
         }
     }
 
-    // Initialize progress bar
-    document.getElementById("donationAmount").innerText = `$${donationTotal}`;
-    document.getElementById("progressBar").style.width = (donationTotal / donationGoal) * 100 + "%";
+    // Initialize the progress bar on page load
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("donationAmount").innerText = `$${donationTotal}`;
+        document.getElementById("progressBar").style.width = (donationTotal / donationGoal) * 100 + "%";
+    });
 </script>
